@@ -4,7 +4,7 @@
 ## Scope
 ---
 
-This app is poc used to demonstrate the Push Notification capabilities of Amazaon's Simple Notification Services and Azure Notification Hub
+This app is a poc used to demonstrate the Push Notification capabilities of Amazaon's Simple Notification Services and Azure Notification Hub
 
 ## Architecture 
 
@@ -22,3 +22,7 @@ Add add the AWS and Azure connectivity keys
 For example 
 AWS_PROD_ACCESS_KEY = "sone value etc "
 See the app build.gradle file for key names 
+
+To build run ./gradlew buildAwsDev
+or ./gradlew buildAzureDev
+
