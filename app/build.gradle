@@ -21,7 +21,8 @@ android {
     flavorDimensions "client","env"
     productFlavors {
         aws{
-            //applicationIdSuffix ".aws"
+            //TODO create firebase json for diff flavours
+            //applicationIdSuffix ".aws" 
             dimension "client"
             dependencies{
                 implementation 'com.amazonaws:aws-android-sdk-sns:2.15.+'
