@@ -2,7 +2,6 @@ package com.notification.poc
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.ProgressBar
@@ -10,16 +9,16 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.amazonaws.services.sns.model.ConfirmSubscriptionRequest
+
 //TODO inject viewmodels
 class MainActivity : AppCompatActivity() {
     lateinit var recyclerView:RecyclerView
 
-    private val viewModel: TopicsViewModel by lazy {
+    private val viewModel: TopicViewModel by lazy {
 
         val repository = (applicationContext as NotiFicationPOCApp).appComponent.topicRepository
-        ViewModelProvider(this, TopicsViewModel.Factory(repository))
-            .get(TopicsViewModel::class.java)
+        ViewModelProvider(this, TopicViewModel.Factory(repository))
+            .get(TopicViewModel::class.java)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

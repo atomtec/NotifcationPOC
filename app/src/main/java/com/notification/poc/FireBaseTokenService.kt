@@ -1,7 +1,6 @@
 package com.notification.poc
 
-//import androidx.work.OneTimeWorkRequest
-//import androidx.work.WorkManager
+
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -11,11 +10,13 @@ import android.content.Intent
 import android.media.RingtoneManager
 import android.os.Build
 import android.util.Log
+import android.widget.Toast
 import androidx.core.app.NotificationCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.notification.poc.data.source.TopicRepository
 import kotlinx.coroutines.*
+import java.lang.Exception
 
 
 class FireBaseTokenService : FirebaseMessagingService() {
@@ -24,12 +25,7 @@ class FireBaseTokenService : FirebaseMessagingService() {
     private val scope = CoroutineScope(Dispatchers.IO + job)
 
     private val topicRepository: TopicRepository by lazy {
-        (applicationContext as NotiFicationPOCApp).appComponent.topicRepository
-    }
-
-    override fun onCreate() {
-        super.onCreate()
-        topicRepository.initProvider(application)
+        (applicationContext as NotificationPOCApp).appComponent.topicRepository
     }
 
     /**
@@ -81,11 +77,9 @@ class FireBaseTokenService : FirebaseMessagingService() {
         // If you want to send messages to this application instance or
         // manage this apps subscriptions on the server side, send the
         // FCM registration token to your app server.
-        //fBreceiver.onNewToken(token)
-        //sendRegistrationToServer(token)
-        //topicRepository.registerWithCloudProvider(token)
+
         scope.launch {
-            topicRepository.registerwithSNSAndCreateEndPointIfRequired(token) //For AZure neeed to make this commonnß
+            topicRepository.registerOrUpdateWithCloudProvider(token)
             topicRepository.fetchTopicsOrUpdateSubscription()
         }
 
@@ -94,12 +88,7 @@ class FireBaseTokenService : FirebaseMessagingService() {
 
 
 
-    /**
-     * Handle time allotted to BroadcastReceivers.
-     */
-    private fun handleNow() {
-        Log.d(TAG, "Short lived task is done.")
-    }
+
 
 
 

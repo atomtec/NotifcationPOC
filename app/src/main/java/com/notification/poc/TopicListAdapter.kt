@@ -37,6 +37,7 @@ class TopicListAdapter(): ListAdapter<AppTopic, TopicListAdapter.TopicItemViewHo
         return TopicItemViewHolder(view).apply {
             getCheckBox().setOnClickListener {
                 getItem(adapterPosition).isSubsribed = getCheckBox().isChecked
+                Log.e("adapter", "Topic ${getItem(adapterPosition).topicName} subscribed ${getItem(adapterPosition).isSubsribed }")
             }
         }
     }

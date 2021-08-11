@@ -2,6 +2,7 @@ package com.notification.poc.di
 
 import android.content.Context
 import androidx.room.Room
+import com.notification.poc.BuildConfig
 import com.notification.poc.data.source.TopicDataSource
 import com.notification.poc.data.source.local.TopicLocalDataSource
 import com.notification.poc.data.source.local.TopicDataBase
@@ -15,6 +16,8 @@ import kotlin.annotation.AnnotationRetention.RUNTIME
 
 @Module
 object AppModule {
+
+    private const val DB_NAME = "Topics.db"
 
     @Qualifier
     @Retention(RUNTIME)
@@ -53,6 +56,8 @@ object AppModule {
     @Singleton
     @Provides
     fun provideIoDispatcher() = Dispatchers.IO
+
+
+
 }
 
-private const val DB_NAME = "Topics.db"

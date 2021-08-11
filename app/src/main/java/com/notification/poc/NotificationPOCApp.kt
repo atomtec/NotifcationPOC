@@ -7,13 +7,13 @@ import com.notification.poc.di.ContextModule
 import com.notification.poc.di.DaggerAppComponent
 
 
-class NotiFicationPOCApp : Application() {
+class NotificationPOCApp : Application() {
 
     val appComponent: AppComponent by lazy {
         initializeComponent()
     }
 
-    fun initializeComponent(): AppComponent {
+    private fun initializeComponent(): AppComponent {
         return DaggerAppComponent.builder().contextModule(ContextModule(applicationContext)).build()
     }
 

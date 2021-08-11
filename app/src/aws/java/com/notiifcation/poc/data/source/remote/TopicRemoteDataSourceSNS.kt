@@ -48,12 +48,14 @@ object TopicRemoteDataSourceSNS:TopicDataSource {
 
     }
 
-    override suspend fun updateTopicsSubscription(endPoint: EndPoint,topics: List<AppTopic>) {
-        val (subscribed,unsubscribed) = topics.partition{apt->
-            apt.isSubsribed
+    override suspend fun updateTopicsSubscription(endPoint: EndPoint?,topics: List<AppTopic>) {
+        endPoint?.let {
+            val (subscribed, unsubscribed) = topics.partition { apt ->
+                apt.isSubsribed
+            }
+            subscribeTopics(endPoint, subscribed)
+            unSubscribeTopics(unsubscribed)
         }
-        subscribeTopics(endPoint,subscribed)
-        unSubscribeTopics(unsubscribed)
     }
 
     override suspend fun deleteAndInsertTopics(topics: List<AppTopic>) {

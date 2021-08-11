@@ -11,11 +11,11 @@ import javax.inject.Singleton
 
 
 @Module
-class RemoteProvider() {
+object RemoteProvider {
     @Provides
     @Singleton
     @AppModule.TopicRemoteDataSource
-    fun provideTasksRemoteDataSource(): TopicDataSource {
+    fun provideTopicRemoteDataSource(): TopicDataSource {
         return RemoteDataSourceAzure
     }
 

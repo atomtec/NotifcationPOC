@@ -12,7 +12,7 @@ interface TopicDataSource {
 
     suspend fun getTopics():List<AppTopic>
 
-    suspend fun updateTopicsSubscription(endPoint: EndPoint,topics:List<AppTopic>)
+    suspend fun updateTopicsSubscription(endPoint: EndPoint?,topics:List<AppTopic>)
 
     suspend fun deleteAndInsertTopics(topics:List<AppTopic>)
 
