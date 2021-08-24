@@ -14,7 +14,10 @@ class NotificationPOCApp : Application() {
     }
 
     private fun initializeComponent(): AppComponent {
-        return DaggerAppComponent.builder().contextModule(ContextModule(applicationContext)).build()
+        return DaggerAppComponent.builder().
+        contextModule(ContextModule(applicationContext)).build().also {
+            it.topicRepository.initProvider(this)
+        }
     }
 
 

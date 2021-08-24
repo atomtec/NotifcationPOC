@@ -16,7 +16,7 @@ class MainActivity : AppCompatActivity() {
 
     private val viewModel: TopicViewModel by lazy {
 
-        val repository = (applicationContext as NotiFicationPOCApp).appComponent.topicRepository
+        val repository = (applicationContext as NotificationPOCApp).appComponent.topicRepository
         ViewModelProvider(this, TopicViewModel.Factory(repository))
             .get(TopicViewModel::class.java)
     }

@@ -8,14 +8,11 @@ import com.notification.poc.data.AppTopic
 import com.notification.poc.data.source.TopicRepository
 import kotlinx.coroutines.launch
 //TODO inject using DI
-class TopicViewModel (private val repository: TopicRepository, val application: Application) : ViewModel() {
+class TopicViewModel (private val repository: TopicRepository) : ViewModel() {
     val topicObserver = repository.observeTopics()
 
     val status = repository.observeStatus()
 
-    init {
-        repository.initProvider(application)
-    }
 
 
     fun updateTopicSubscription (appTopics: List<AppTopic>){
@@ -25,11 +22,11 @@ class TopicViewModel (private val repository: TopicRepository, val application: 
 
     }
 
-    class Factory(val repository: TopicRepository, val application: Application) : ViewModelProvider.Factory {
+    class Factory(val repository: TopicRepository) : ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(TopicViewModel::class.java)) {
                 @Suppress("UNCHECKED_CAST")
-                return TopicViewModel(repository,application) as T
+                return TopicViewModel(repository) as T
             }
             throw IllegalArgumentException("Unable to construct viewmodel")
         }

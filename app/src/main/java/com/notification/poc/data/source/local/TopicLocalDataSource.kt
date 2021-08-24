@@ -21,14 +21,14 @@ class TopicLocalDataSource internal constructor(private val topicDao: TopicDao, 
         }
     }
 
-    override suspend fun getPlatformRegistration(): String {
-        TODO("Not yet implemented")
-    }
-
-
-    override suspend fun updateTopicsSubscription(endPoint: EndPoint,topics: List<AppTopic>) = withContext(ioDispatcher) {
+    override suspend fun updateTopicsSubscription(endPoint: EndPoint?, topics: List<AppTopic>) {
         topicDao.insertOrUpdateTopic(topics)
     }
+
+    override suspend fun getPlatformRegistration(): String {
+        TODO("For Remote")
+    }
+
 
     override suspend fun deleteAndInsertTopics(topics: List<AppTopic>) {
         topicDao.deleteAndInsert(topics)
@@ -66,7 +66,7 @@ class TopicLocalDataSource internal constructor(private val topicDao: TopicDao, 
     }
 
     override fun initializeProvider(application: Application) {
-        TODO("Not yet implemented")
+        TODO("For Remote")
     }
 
 
