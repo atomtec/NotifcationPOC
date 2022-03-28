@@ -4,19 +4,15 @@ import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.amazonaws.services.sns.model.NotFoundException
-import com.notification.poc.BuildConfig
 import com.notification.poc.data.AppTopic
 import com.notification.poc.data.EndPoint
-import com.notification.poc.di.AppModule
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import java.lang.Exception
-import javax.inject.Inject
 
-class TopicRepository @Inject constructor (
-    @AppModule.TopicRemoteDataSource private val topicRemoteDataSource: TopicDataSource,
-    @AppModule.TopicLocalDataSource private val topicLocalDataSource: TopicDataSource,
+class TopicRepository  constructor (
+    private val topicRemoteDataSource: TopicDataSource,
+    private val topicLocalDataSource: TopicDataSource,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) {
     private val status = MutableLiveData<Boolean>(false)

@@ -22,13 +22,4 @@ class TopicViewModel (private val repository: TopicRepository) : ViewModel() {
 
     }
 
-    class Factory(val repository: TopicRepository) : ViewModelProvider.Factory {
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(TopicViewModel::class.java)) {
-                @Suppress("UNCHECKED_CAST")
-                return TopicViewModel(repository) as T
-            }
-            throw IllegalArgumentException("Unable to construct viewmodel")
-        }
-    }
 }

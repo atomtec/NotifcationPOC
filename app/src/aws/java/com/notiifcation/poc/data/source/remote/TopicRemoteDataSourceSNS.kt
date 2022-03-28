@@ -10,6 +10,7 @@ import com.amazonaws.regions.Regions
 import com.amazonaws.services.sns.AmazonSNSClient
 import com.amazonaws.services.sns.model.*
 import com.notification.poc.BuildConfig
+
 import com.notification.poc.data.AppTopic
 import com.notification.poc.data.EndPoint
 import com.notification.poc.data.source.TopicDataSource
