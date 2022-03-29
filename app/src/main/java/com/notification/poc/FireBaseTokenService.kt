@@ -10,13 +10,15 @@ import android.content.Intent
 import android.media.RingtoneManager
 import android.os.Build
 import android.util.Log
-import android.widget.Toast
 import androidx.core.app.NotificationCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.notification.poc.data.source.TopicRepository
-import kotlinx.coroutines.*
-import java.lang.Exception
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
+import org.koin.android.ext.android.inject
 
 
 class FireBaseTokenService : FirebaseMessagingService() {
@@ -24,9 +26,7 @@ class FireBaseTokenService : FirebaseMessagingService() {
     private val job = SupervisorJob()
     private val scope = CoroutineScope(Dispatchers.IO + job)
 
-    private val topicRepository: TopicRepository by lazy {
-        (applicationContext as NotificationPOCApp).appComponent.topicRepository
-    }
+    private val topicRepository: TopicRepository by inject()
 
     /**
      * Called when message is received.

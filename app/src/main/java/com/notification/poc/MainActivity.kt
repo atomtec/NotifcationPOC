@@ -6,7 +6,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.ProgressBar
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
@@ -14,12 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 class MainActivity : AppCompatActivity() {
     lateinit var recyclerView:RecyclerView
 
-    private val viewModel: TopicViewModel by lazy {
-
-        val repository = (applicationContext as NotificationPOCApp).appComponent.topicRepository
-        ViewModelProvider(this, TopicViewModel.Factory(repository))
-            .get(TopicViewModel::class.java)
-    }
+    private val viewModel : TopicViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
