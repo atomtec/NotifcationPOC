@@ -12,7 +12,7 @@ This app is a poc used to demonstrate the Push Notification capabilities of Amaz
 This app uses a **MVVM** architecture with the local data base holding the topics  . The data is synced with the cloud providers as per user's choice .
 The app has code for both aws and Azure connectivity which is separated by its respective build flavours .
 
-It also uses **Koin* for dependency injection 
+It also uses **Koin** for dependency injection 
 
 ## Build 
 
