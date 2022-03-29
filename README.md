@@ -1,4 +1,4 @@
-# AWS  AND AZURE POC Using Dagger2
+# AWS  AND AZURE POC Using Koin
 
 
 ## Scope
