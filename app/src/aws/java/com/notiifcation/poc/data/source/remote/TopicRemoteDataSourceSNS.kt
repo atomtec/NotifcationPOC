@@ -146,7 +146,6 @@ object TopicRemoteDataSourceSNS:TopicDataSource {
                 throw ipe
             }
         }
-
         return EndPoint(endpointArn!!)
     }
 

@@ -3,7 +3,7 @@ buildscript {
     ext.kotlin_version = "1.5.0"
     ext.coroutinesVersion = "1.5.0"
     ext.roomVersion = '2.3.0'
-    ext.daggerVersion = '2.25.4'
+    ext.hilt_version = '2.38.1'
     repositories {
         google()
         mavenCentral()
@@ -12,6 +12,7 @@ buildscript {
         classpath "com.android.tools.build:gradle:4.1.2"
         classpath 'com.google.gms:google-services:4.3.8'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "com.google.dagger:hilt-android-gradle-plugin:${hilt_version}"
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
