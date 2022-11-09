@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.amazonaws.services.sns.model.NotFoundException
+import com.notification.poc.NotificationPOCApp
 import com.notification.poc.data.AppTopic
 import com.notification.poc.data.EndPoint
 import kotlinx.coroutines.CoroutineDispatcher
@@ -13,7 +14,8 @@ import kotlinx.coroutines.withContext
 class TopicRepository  constructor (
     private val topicRemoteDataSource: TopicDataSource,
     private val topicLocalDataSource: TopicDataSource,
-    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
+    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
+    private val application: NotificationPOCApp
 ) {
     private val status = MutableLiveData<Boolean>(false)
 
@@ -21,6 +23,10 @@ class TopicRepository  constructor (
 
     fun observeTopics(): LiveData<List<AppTopic>> {
         return topicLocalDataSource.observeTopics()
+    }
+
+    init {
+        initProvider(application)
     }
 
     fun observeStatus():LiveData<Boolean>{
@@ -44,17 +50,26 @@ class TopicRepository  constructor (
 
     suspend fun registerOrUpdateWithCloudProvider(token:String) {
         withContext(ioDispatcher) {
-            var endPoint: EndPoint? = topicLocalDataSource.retrieveEndPoint()
-            endPoint =
-                topicRemoteDataSource.registerOrUpdateWithCloudProvider(endPoint, token)
-            endPoint?.let {
-                topicLocalDataSource.saveEndPoint(it)// if it not null then it is update
+            try {
+                var endPoint: EndPoint? = topicLocalDataSource.retrieveEndPoint()
+                endPoint =
+                    topicRemoteDataSource.registerOrUpdateWithCloudProvider(endPoint, token)
+                endPoint?.let {
+                    topicLocalDataSource.saveEndPoint(it)// if it not null then it is update
+                }
+            } catch (ex: Exception) {
+                ex.printStackTrace()
             }
         }
     }
 
     fun initProvider(application:Application){
-        topicRemoteDataSource.initializeProvider(application)
+        try{
+            topicRemoteDataSource.initializeProvider(application)
+        }catch (ex: Exception){
+            ex.printStackTrace()
+        }
+
     }
 
 

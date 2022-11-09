@@ -2,6 +2,7 @@ package com.notification.poc.di
 
 import android.app.Application
 import androidx.room.Room
+import com.notification.poc.NotificationPOCApp
 import com.notification.poc.TopicViewModel
 import com.notification.poc.data.source.TopicDataSource
 import com.notification.poc.data.source.TopicRepository
@@ -26,6 +27,8 @@ val appModule = module {
         ).build()
     }
 
+
+
     fun provideTopicDao(dataBase: TopicDataBase): TopicDao {
         return dataBase.topicDao()
     }
@@ -33,6 +36,7 @@ val appModule = module {
     fun provideEndPointDao(dataBase: TopicDataBase): EndPointDao {
         return dataBase.endpointDao()
     }
+
 
     single { provideDataBase(androidApplication()) }
     single { Dispatchers.IO }
@@ -44,8 +48,9 @@ val appModule = module {
 }
 
 val repoModule = module {
+
     single { TopicRepository(get(named("TopicRemoteDataSource")),
-        get(named("TopicLocalDataSource")), get()) }
+        get(named("TopicLocalDataSource")), get(), androidApplication() as NotificationPOCApp) }
 }
 
 val viewModelModule = module {
@@ -53,3 +58,4 @@ val viewModelModule = module {
         TopicViewModel(get())
     }
 }
+
