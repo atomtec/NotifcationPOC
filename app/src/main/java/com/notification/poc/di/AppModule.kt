@@ -2,20 +2,26 @@ package com.notification.poc.di
 
 import android.content.Context
 import androidx.room.Room
-import com.notification.poc.BuildConfig
+import com.notification.poc.NotificationPOCApp
 import com.notification.poc.data.source.TopicDataSource
-import com.notification.poc.data.source.local.TopicLocalDataSource
+import com.notification.poc.data.source.TopicRepository
 import com.notification.poc.data.source.local.TopicDataBase
+import com.notification.poc.data.source.local.TopicLocalDataSource
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import javax.inject.Qualifier
 import javax.inject.Singleton
 import kotlin.annotation.AnnotationRetention.RUNTIME
 
+@InstallIn(SingletonComponent::class)
 @Module
-object AppModule {
+object
+AppModule {
 
     private const val DB_NAME = "Topics.db"
 
@@ -27,9 +33,14 @@ object AppModule {
     @Retention(RUNTIME)
     annotation class TopicLocalDataSource
 
+    @Singleton
+    @Provides
+    fun provideApplicationContext(@ApplicationContext app: Context): NotificationPOCApp {
+        return app as NotificationPOCApp
+    }
 
 
-    @JvmStatic
+
     @Singleton
     @TopicLocalDataSource
     @Provides
@@ -42,22 +53,18 @@ object AppModule {
         )
     }
 
-    @JvmStatic
     @Singleton
     @Provides
-    fun provideDataBase(context: Context): TopicDataBase {
+    fun provideDataBase(context: NotificationPOCApp): TopicDataBase {
         return Room.databaseBuilder(
             context.applicationContext,
             TopicDataBase::class.java, DB_NAME,
         ).build()
     }
 
-    @JvmStatic
     @Singleton
     @Provides
     fun provideIoDispatcher() = Dispatchers.IO
-
-
 
 }
 

@@ -1,25 +1,21 @@
 package com.notification.poc
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.ProgressBar
+import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import dagger.hilt.android.AndroidEntryPoint
 
-//TODO inject viewmodels
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     lateinit var recyclerView:RecyclerView
 
-    private val viewModel: TopicViewModel by lazy {
-
-        val repository = (applicationContext as NotificationPOCApp).appComponent.topicRepository
-        ViewModelProvider(this, TopicViewModel.Factory(repository))
-            .get(TopicViewModel::class.java)
-    }
+    private val viewModel:TopicViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

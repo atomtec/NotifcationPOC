@@ -39,6 +39,7 @@ captures/
 
 #IDE metadata
 **.idea/**
+.idea
 # IntelliJ
 *.iml
 .idea/workspace.xml

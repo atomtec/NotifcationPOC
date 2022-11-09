@@ -6,14 +6,15 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.notification.poc.data.AppTopic
 import com.notification.poc.data.source.TopicRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-//TODO inject using DI
-class TopicViewModel (private val repository: TopicRepository) : ViewModel() {
+import javax.inject.Inject
+
+@HiltViewModel
+class TopicViewModel @Inject constructor(private val repository: TopicRepository): ViewModel() {
     val topicObserver = repository.observeTopics()
 
     val status = repository.observeStatus()
-
-
 
     fun updateTopicSubscription (appTopics: List<AppTopic>){
         viewModelScope.launch {
@@ -22,13 +23,4 @@ class TopicViewModel (private val repository: TopicRepository) : ViewModel() {
 
     }
 
-    class Factory(val repository: TopicRepository) : ViewModelProvider.Factory {
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(TopicViewModel::class.java)) {
-                @Suppress("UNCHECKED_CAST")
-                return TopicViewModel(repository) as T
-            }
-            throw IllegalArgumentException("Unable to construct viewmodel")
-        }
-    }
 }

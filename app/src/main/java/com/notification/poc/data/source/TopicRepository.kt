@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.amazonaws.services.sns.model.NotFoundException
 import com.notification.poc.BuildConfig
+import com.notification.poc.NotificationPOCApp
 import com.notification.poc.data.AppTopic
 import com.notification.poc.data.EndPoint
 import com.notification.poc.di.AppModule
@@ -17,11 +18,15 @@ import javax.inject.Inject
 class TopicRepository @Inject constructor (
     @AppModule.TopicRemoteDataSource private val topicRemoteDataSource: TopicDataSource,
     @AppModule.TopicLocalDataSource private val topicLocalDataSource: TopicDataSource,
-    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
+    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
+    private val appLication: NotificationPOCApp
 ) {
     private val status = MutableLiveData<Boolean>(false)
 
 
+    init {
+        initProvider(appLication)
+    }
 
     fun observeTopics(): LiveData<List<AppTopic>> {
         return topicLocalDataSource.observeTopics()
@@ -48,17 +53,29 @@ class TopicRepository @Inject constructor (
 
     suspend fun registerOrUpdateWithCloudProvider(token:String) {
         withContext(ioDispatcher) {
-            var endPoint: EndPoint? = topicLocalDataSource.retrieveEndPoint()
-            endPoint =
-                topicRemoteDataSource.registerOrUpdateWithCloudProvider(endPoint, token)
-            endPoint?.let {
-                topicLocalDataSource.saveEndPoint(it)// if it not null then it is update
+            try {
+
+                var endPoint: EndPoint? = topicLocalDataSource.retrieveEndPoint()
+                endPoint =
+                    topicRemoteDataSource.registerOrUpdateWithCloudProvider(endPoint, token)
+                endPoint?.let {
+                    topicLocalDataSource.saveEndPoint(it)// if it not null then it is update
+                }
+            }
+            catch (ex: Exception){
+                ex.printStackTrace()
             }
         }
     }
 
     fun initProvider(application:Application){
-        topicRemoteDataSource.initializeProvider(application)
+        try{
+            topicRemoteDataSource.initializeProvider(application)
+        }
+        catch (ex: Exception){
+            ex.printStackTrace()
+        }
+
     }
 
 
